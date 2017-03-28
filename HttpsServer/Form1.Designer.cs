@@ -28,36 +28,41 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.ListenerLabel = new System.Windows.Forms.Label();
             this.ListenerTextBox = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.addPortTextBox = new System.Windows.Forms.TextBox();
+            this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.SuspendLayout();
             // 
             // ListenerLabel
             // 
             this.ListenerLabel.AutoSize = true;
-            this.ListenerLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.ListenerLabel.ForeColor = System.Drawing.SystemColors.ButtonShadow;
+            this.ListenerLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.ListenerLabel.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.ListenerLabel.Location = new System.Drawing.Point(12, 9);
             this.ListenerLabel.Name = "ListenerLabel";
-            this.ListenerLabel.Size = new System.Drawing.Size(131, 18);
+            this.ListenerLabel.Size = new System.Drawing.Size(114, 18);
             this.ListenerLabel.TabIndex = 0;
             this.ListenerLabel.Text = "Listener Status::";
             // 
             // ListenerTextBox
             // 
-            this.ListenerTextBox.BackColor = System.Drawing.SystemColors.AppWorkspace;
+            this.ListenerTextBox.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.ListenerTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.ListenerTextBox.ForeColor = System.Drawing.SystemColors.Window;
+            this.ListenerTextBox.ForeColor = System.Drawing.SystemColors.HighlightText;
             this.ListenerTextBox.Location = new System.Drawing.Point(12, 39);
             this.ListenerTextBox.Multiline = true;
             this.ListenerTextBox.Name = "ListenerTextBox";
+            this.ListenerTextBox.ReadOnly = true;
             this.ListenerTextBox.Size = new System.Drawing.Size(376, 127);
             this.ListenerTextBox.TabIndex = 2;
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(709, 326);
+            this.button1.Location = new System.Drawing.Point(588, 316);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(85, 28);
             this.button1.TabIndex = 3;
@@ -65,12 +70,40 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.label1.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.label1.Location = new System.Drawing.Point(458, 42);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(104, 18);
+            this.label1.TabIndex = 4;
+            this.label1.Text = "Listening port::";
+            this.toolTip.SetToolTip(this.label1, "Insert the port number to listen. Default port number\r\nthat will always be turned" +
+        " on is 8080.");
+            // 
+            // addPortTextBox
+            // 
+            this.addPortTextBox.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.addPortTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.addPortTextBox.ForeColor = System.Drawing.SystemColors.HighlightText;
+            this.addPortTextBox.Location = new System.Drawing.Point(588, 39);
+            this.addPortTextBox.Name = "addPortTextBox";
+            this.addPortTextBox.Size = new System.Drawing.Size(85, 24);
+            this.addPortTextBox.TabIndex = 5;
+            this.addPortTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.toolTip.SetToolTip(this.addPortTextBox, "Insert the port number to listen. Default port number\r\nthat will always be turned" +
+        " on is 8080.\r\n");
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.ClientSize = new System.Drawing.Size(841, 380);
+            this.BackColor = System.Drawing.SystemColors.Menu;
+            this.ClientSize = new System.Drawing.Size(745, 380);
+            this.Controls.Add(this.addPortTextBox);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.ListenerTextBox);
             this.Controls.Add(this.ListenerLabel);
@@ -86,6 +119,9 @@
         private System.Windows.Forms.Label ListenerLabel;
         private System.Windows.Forms.TextBox ListenerTextBox;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox addPortTextBox;
+        private System.Windows.Forms.ToolTip toolTip;
     }
 }
 

@@ -26,13 +26,18 @@ namespace HttpsServer
             HttpListener web = new HttpListener();
             web.Prefixes.Add("http://*:8080/");
             //web.Prefixes.Add("https://*:8443/");
+            if (!string.IsNullOrWhiteSpace(addPortTextBox.Text))
+            {
+                Invoke(new MethodInvoker(delegate () { web.Prefixes.Add("http://*:" + addPortTextBox.Text + "/"); }));
+                SetText("Port " + addPortTextBox.Text + " added to listeninig ports...");
+            }           
             SetText("Listening ... ");
             web.Start();
             SetText("Starting GetContext() ...");
             HttpListenerContext context = web.GetContext();
             SetText("GetContext() got something! ");
             HttpListenerResponse response = context.Response;
-            const string responseString = "<html><body>Hello world</body></html>";
+            const string responseString = "<html><body>Working finally!!</body></html>";
             var buffer = System.Text.Encoding.UTF8.GetBytes(responseString);
             response.ContentLength64 = buffer.Length;
             Stream output = response.OutputStream;
@@ -43,17 +48,18 @@ namespace HttpsServer
         }
         private void SetText(string text)
         {
-
-            if (this.ListenerTextBox.InvokeRequired)
+            string txt = text;
+            if (ListenerTextBox.InvokeRequired)
             {
                 SetTextCallback d = new SetTextCallback(SetText);
-                this.Invoke(d, new object[] { text });
+                Invoke(d, new object[] { text });
             }
             else
             {
-                this.ListenerTextBox.AppendText(text + Environment.NewLine);
+                ListenerTextBox.AppendText(text + Environment.NewLine);
             }
         }
+
 
         private void button1_Click(object sender, EventArgs e)
         {
