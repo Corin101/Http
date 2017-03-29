@@ -24,20 +24,22 @@ namespace HttpsServer
          private void StartListener()
         {
             HttpListener web = new HttpListener();
-            web.Prefixes.Add("http://*:8080/");
-            //web.Prefixes.Add("https://*:8443/");
-            if (!string.IsNullOrWhiteSpace(addPortTextBox.Text))
+
+            foreach (string text in prefixHttp)
             {
-                Invoke(new MethodInvoker(delegate () { web.Prefixes.Add("http://*:" + addPortTextBox.Text + "/"); }));
-                SetText("Port " + addPortTextBox.Text + " added to listeninig ports...");
-            }           
+                web.Prefixes.Add("http://*:" + text + "/");
+            }
+            foreach (string text in prefixHttps)
+            {
+                web.Prefixes.Add("https://*:" + text + "/");
+            }
             SetText("Listening ... ");
             web.Start();
             SetText("Starting GetContext() ...");
             HttpListenerContext context = web.GetContext();
             SetText("GetContext() got something! ");
             HttpListenerResponse response = context.Response;
-            const string responseString = "<html><body>Working finally!!</body></html>";
+            const string responseString = "<html><body>Hellou! :)</body></html>";
             var buffer = System.Text.Encoding.UTF8.GetBytes(responseString);
             response.ContentLength64 = buffer.Length;
             Stream output = response.OutputStream;
@@ -45,6 +47,42 @@ namespace HttpsServer
             SetText("Output displayed!");
             output.Close();
             web.Stop();
+        }
+
+        private void addPortTextBox_KeyUp(object sender, KeyEventArgs e)
+        {
+            CheckEnter(e, true);
+        }
+        private void addHttpsPortTextBox_KeyUp(object sender, KeyEventArgs e)
+        {
+            CheckEnter(e, false);
+        }
+        private void CheckEnter(KeyEventArgs e, bool portType)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                AddPort(portType);
+                e.Handled = true;
+            }
+        }
+        private void AddPort(bool portType)
+        {
+            if (!string.IsNullOrWhiteSpace(addPortTextBox.Text))
+            {
+                if (portType == true)
+                {
+                    prefixHttp.Add(addPortTextBox.Text);
+                    SetText("Port " + addPortTextBox.Text + " will be included in the listeninig list!");
+                    addPortTextBox.Text = "";
+                }
+                else
+                {
+                    prefixHttps.Add(addHttpsPortTextBox.Text);
+                    SetText("Port " + addHttpsPortTextBox + " will be included in the listeniing list!");
+                    addHttpsPortTextBox.Text = "";
+                }
+            }
+
         }
         private void SetText(string text)
         {
@@ -67,9 +105,10 @@ namespace HttpsServer
             ListenerThread.Start();
         }
 
-
-
-
+        private List<string> prefixHttp = new List<string>() {"8080"};
+        private List<string> prefixHttps = new List<string>() {"8443"};
         delegate void SetTextCallback(string text);
+
+
     }
 }

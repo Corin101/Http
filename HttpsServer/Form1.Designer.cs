@@ -35,6 +35,8 @@
             this.label1 = new System.Windows.Forms.Label();
             this.addPortTextBox = new System.Windows.Forms.TextBox();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.label2 = new System.Windows.Forms.Label();
+            this.addHttpsPortTextBox = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // ListenerLabel
@@ -62,7 +64,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(588, 316);
+            this.button1.Location = new System.Drawing.Point(601, 311);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(85, 28);
             this.button1.TabIndex = 3;
@@ -75,11 +77,11 @@
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.label1.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label1.Location = new System.Drawing.Point(458, 42);
+            this.label1.Location = new System.Drawing.Point(458, 45);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(104, 18);
+            this.label1.Size = new System.Drawing.Size(99, 18);
             this.label1.TabIndex = 4;
-            this.label1.Text = "Listening port::";
+            this.label1.Text = "Add http port::";
             this.toolTip.SetToolTip(this.label1, "Insert the port number to listen. Default port number\r\nthat will always be turned" +
         " on is 8080.");
             // 
@@ -88,13 +90,36 @@
             this.addPortTextBox.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.addPortTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.addPortTextBox.ForeColor = System.Drawing.SystemColors.HighlightText;
-            this.addPortTextBox.Location = new System.Drawing.Point(588, 39);
+            this.addPortTextBox.Location = new System.Drawing.Point(601, 42);
             this.addPortTextBox.Name = "addPortTextBox";
             this.addPortTextBox.Size = new System.Drawing.Size(85, 24);
             this.addPortTextBox.TabIndex = 5;
             this.addPortTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.toolTip.SetToolTip(this.addPortTextBox, "Insert the port number to listen. Default port number\r\nthat will always be turned" +
         " on is 8080.\r\n");
+            this.addPortTextBox.KeyUp += new System.Windows.Forms.KeyEventHandler(this.addPortTextBox_KeyUp);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.label2.Location = new System.Drawing.Point(458, 88);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(107, 18);
+            this.label2.TabIndex = 6;
+            this.label2.Text = "Add https port::";
+            // 
+            // addHttpsPortTextBox
+            // 
+            this.addHttpsPortTextBox.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.addHttpsPortTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.addHttpsPortTextBox.ForeColor = System.Drawing.SystemColors.HighlightText;
+            this.addHttpsPortTextBox.Location = new System.Drawing.Point(601, 85);
+            this.addHttpsPortTextBox.Name = "addHttpsPortTextBox";
+            this.addHttpsPortTextBox.Size = new System.Drawing.Size(85, 24);
+            this.addHttpsPortTextBox.TabIndex = 7;
+            this.addHttpsPortTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.addHttpsPortTextBox.KeyUp += new System.Windows.Forms.KeyEventHandler(this.addHttpsPortTextBox_KeyUp);
             // 
             // Form1
             // 
@@ -102,13 +127,15 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Menu;
             this.ClientSize = new System.Drawing.Size(745, 380);
+            this.Controls.Add(this.addHttpsPortTextBox);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.addPortTextBox);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.ListenerTextBox);
             this.Controls.Add(this.ListenerLabel);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "Mini Server";
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -122,6 +149,8 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox addPortTextBox;
         private System.Windows.Forms.ToolTip toolTip;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox addHttpsPortTextBox;
     }
 }
 
