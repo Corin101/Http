@@ -19,43 +19,58 @@ namespace HttpsClient
         public Form1()
         {
             InitializeComponent();
-        }
-
-        private void StartClient()
-        {
-            ServicePointManager.ServerCertificateValidationCallback = new RemoteCertificateValidationCallback(CheckValidationResult);
-            
-            Console.WriteLine("Visiting " + url);
-            HttpWebRequest objRequest = System.Net.HttpWebRequest.Create(url) as HttpWebRequest;
-            objRequest.ProtocolVersion = HttpVersion.Version10;
-
-            var response = objRequest.GetResponse();
-            StreamReader responseReader = new StreamReader(response.GetResponseStream());
-            var responseContent = responseReader.ReadToEnd();
-            Console.WriteLine("Server replied: " + responseContent);
 
         }
 
-        static X509Certificate2 LoadClientCertificate()
+        private void certComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            var store = new X509Store(StoreLocation.CurrentUser);
-            store.Open(OpenFlags.ReadOnly);
-            var certificates = store.Certificates.Find(X509FindType.FindBySubjectName, "CorinCert", true);
-            if (certificates.Count != 0)
+            if (certComboBox.SelectedItem == certComboBox.Items[0])
             {
-                return null;
+                certPathLabel.Visible = false;
+                certPathTextBox.Visible = false;
+                certPasswordLabel.Visible = false;
+                certPasswordTextBox.Visible = false;
+                return;
             }
-            store.Close();
-            return certificates[0];
+            if (certComboBox.SelectedItem == certComboBox.Items[1])
+            {
+                certPathLabel.Text = "Enter path to Certificate::";
+                certPathLabel.Visible = true;
+                certPathTextBox.Visible = true;
+                return;
+            }
+            if (certComboBox.SelectedItem == certComboBox.Items[2])
+            {
+                certPathLabel.Text = "Certificate name (with suffix)::";
+                certPathLabel.Visible = true;
+                certPathTextBox.Visible = true;
+                certPasswordLabel.Visible = true;
+                certPasswordTextBox.Visible = true;
+            }
         }
 
-        private void LoadFromFile()
+        private void serverUrlTextBox_KeyUp(object sender, KeyEventArgs e)
         {
-            HttpWebRequest objRequest = System.Net.HttpWebRequest.Create(url) as HttpWebRequest;
-            X509Certificate2 clientCertificate = new X509Certificate2("CorinCert.pfx", "123");
-            objRequest.ClientCertificates.Add(clientCertificate);
+            if (e.KeyCode == Keys.Enter)
+            {
+                if (!string.IsNullOrWhiteSpace(serverUrlTextBox.Text))
+                {
+                    statusTextBox.AppendText(serverUrlTextBox.Text + " was set as the server URL" + Environment.NewLine);
+                    serverUrlTextBox.Text = "";
+
+                }
+                e.Handled = true;
+            }
         }
 
-        private string url = "https://localhost:90/";
+        private void StartButton_Click(object sender, EventArgs e)
+        {
+            if (newClient.ServerUrl != null && newClient.CertInfo != null)
+            {
+                newClient.StartClient();
+            }
+        }
+
+        ClientBuilder newClient = new ClientBuilder();
     }
 }
