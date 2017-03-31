@@ -38,6 +38,9 @@ namespace HttpsServer
             SetText("Starting GetContext() ...");
             HttpListenerContext context = web.GetContext();
             SetText("GetContext() got something! ");
+
+
+
             HttpListenerResponse response = context.Response;
             const string responseString = "<html><body>Hellou! :)</body></html>";
             var buffer = System.Text.Encoding.UTF8.GetBytes(responseString);
