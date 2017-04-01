@@ -115,10 +115,13 @@
             this.certPathTextBox.TabIndex = 6;
             this.certPathTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.certPathTextBox.Visible = false;
+            this.certPathTextBox.KeyUp += new System.Windows.Forms.KeyEventHandler(this.certPathTextBox_KeyUp);
             // 
             // certComboBox
             // 
             this.certComboBox.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.certComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.certComboBox.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.certComboBox.ForeColor = System.Drawing.SystemColors.HighlightText;
             this.certComboBox.FormattingEnabled = true;
             this.certComboBox.Items.AddRange(new object[] {
@@ -130,6 +133,7 @@
             this.certComboBox.Size = new System.Drawing.Size(244, 24);
             this.certComboBox.TabIndex = 7;
             this.certComboBox.SelectedIndexChanged += new System.EventHandler(this.certComboBox_SelectedIndexChanged);
+            this.certComboBox.SelectedIndex = 0;
             // 
             // certPathLabel
             // 
@@ -157,12 +161,14 @@
             // 
             this.certPasswordTextBox.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.certPasswordTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.certPasswordTextBox.ForeColor = System.Drawing.SystemColors.HighlightText;
             this.certPasswordTextBox.Location = new System.Drawing.Point(453, 254);
             this.certPasswordTextBox.Name = "certPasswordTextBox";
             this.certPasswordTextBox.Size = new System.Drawing.Size(244, 24);
             this.certPasswordTextBox.TabIndex = 10;
             this.certPasswordTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.certPasswordTextBox.Visible = false;
+            this.certPasswordTextBox.KeyUp += new System.Windows.Forms.KeyEventHandler(this.certPasswordTextBox_KeyUp);
             // 
             // Form1
             // 
@@ -190,15 +196,15 @@
 
         #endregion
 
-        protected System.Windows.Forms.Label StatusLabel;
-        protected System.Windows.Forms.TextBox statusTextBox;
-        protected System.Windows.Forms.Label ServerUrlLabel;
-        protected System.Windows.Forms.TextBox serverUrlTextBox;
-        protected System.Windows.Forms.Button StartButton;
-        protected System.Windows.Forms.Label certLabel;
-        protected System.Windows.Forms.TextBox certPathTextBox;
-        protected System.Windows.Forms.ComboBox certComboBox;
-        protected System.Windows.Forms.Label certPathLabel;
+        private System.Windows.Forms.Label StatusLabel;
+        private System.Windows.Forms.TextBox statusTextBox;
+        private System.Windows.Forms.Label ServerUrlLabel;
+        private System.Windows.Forms.TextBox serverUrlTextBox;
+        private System.Windows.Forms.Button StartButton;
+        private System.Windows.Forms.Label certLabel;
+        private System.Windows.Forms.TextBox certPathTextBox;
+        private System.Windows.Forms.ComboBox certComboBox;
+        private System.Windows.Forms.Label certPathLabel;
         private System.Windows.Forms.Label certPasswordLabel;
         private System.Windows.Forms.TextBox certPasswordTextBox;
     }

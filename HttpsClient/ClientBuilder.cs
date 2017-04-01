@@ -50,7 +50,8 @@ namespace HttpsClient
         private void LoadFromFile()
         {
             HttpWebRequest objRequest = System.Net.HttpWebRequest.Create(ServerUrl) as HttpWebRequest;
-            X509Certificate2 clientCertificate = new X509Certificate2("CorinCert.pfx", "123");
+            // CertInfo is the name of the certificate with it's suffix (it must me a .pfx file), CertPwd is the password for the certificate)
+            X509Certificate2 clientCertificate = new X509Certificate2(CertInfo, CertPwd);
             objRequest.ClientCertificates.Add(clientCertificate);
         }
     
