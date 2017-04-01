@@ -19,7 +19,7 @@ namespace HttpsClient
         public Form1()
         {
             InitializeComponent();
-
+            certComboBox.SelectedIndex = 0;
         }
 
         private void certComboBox_SelectedIndexChanged(object sender, EventArgs e)

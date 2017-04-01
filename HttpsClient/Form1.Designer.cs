@@ -28,6 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.StatusLabel = new System.Windows.Forms.Label();
             this.statusTextBox = new System.Windows.Forms.TextBox();
             this.ServerUrlLabel = new System.Windows.Forms.Label();
@@ -39,6 +41,7 @@
             this.certPathLabel = new System.Windows.Forms.Label();
             this.certPasswordLabel = new System.Windows.Forms.Label();
             this.certPasswordTextBox = new System.Windows.Forms.TextBox();
+            this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.SuspendLayout();
             // 
             // StatusLabel
@@ -71,6 +74,8 @@
             this.ServerUrlLabel.Size = new System.Drawing.Size(82, 18);
             this.ServerUrlLabel.TabIndex = 2;
             this.ServerUrlLabel.Text = "Server Url::";
+            this.toolTip.SetToolTip(this.ServerUrlLabel, "IP address of the server you want to connect to.\r\nPort number must also be includ" +
+        "ed!\r\nIPv4 format.\r\n\r\n");
             // 
             // serverUrlTextBox
             // 
@@ -82,6 +87,8 @@
             this.serverUrlTextBox.Size = new System.Drawing.Size(244, 24);
             this.serverUrlTextBox.TabIndex = 3;
             this.serverUrlTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.toolTip.SetToolTip(this.serverUrlTextBox, "IP address of the server you want to connect to.\r\nPort number must also be includ" +
+        "ed!\r\nIPv4 format.\r\n");
             this.serverUrlTextBox.KeyUp += new System.Windows.Forms.KeyEventHandler(this.serverUrlTextBox_KeyUp);
             // 
             // StartButton
@@ -103,6 +110,7 @@
             this.certLabel.Size = new System.Drawing.Size(86, 18);
             this.certLabel.TabIndex = 5;
             this.certLabel.Text = "Certificate ::";
+            this.toolTip.SetToolTip(this.certLabel, resources.GetString("certLabel.ToolTip"));
             // 
             // certPathTextBox
             // 
@@ -132,8 +140,8 @@
             this.certComboBox.Name = "certComboBox";
             this.certComboBox.Size = new System.Drawing.Size(244, 24);
             this.certComboBox.TabIndex = 7;
+            this.toolTip.SetToolTip(this.certComboBox, resources.GetString("certComboBox.ToolTip"));
             this.certComboBox.SelectedIndexChanged += new System.EventHandler(this.certComboBox_SelectedIndexChanged);
-            this.certComboBox.SelectedIndex = 0;
             // 
             // certPathLabel
             // 
@@ -174,7 +182,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.SystemColors.Menu;
+            this.BackColor = System.Drawing.Color.Azure;
             this.ClientSize = new System.Drawing.Size(745, 380);
             this.Controls.Add(this.certPasswordTextBox);
             this.Controls.Add(this.certPasswordLabel);
@@ -207,6 +215,7 @@
         private System.Windows.Forms.Label certPathLabel;
         private System.Windows.Forms.Label certPasswordLabel;
         private System.Windows.Forms.TextBox certPasswordTextBox;
+        private System.Windows.Forms.ToolTip toolTip;
     }
 }
 

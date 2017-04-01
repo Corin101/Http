@@ -117,4 +117,25 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <metadata name="toolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
+  <metadata name="toolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
+  <data name="certLabel.ToolTip" xml:space="preserve">
+    <value>Choose Certificate you want to use to authenticate the client. There are two ways
+you can load your certificate. Load it directly from a *.pfx file by typing in the name
+of the certificate along with the suffix. You will also have to provide a password for
+the certificate. Or you can load it directly from your certificate store by typing in
+the name of certificate to use. 
+</value>
+  </data>
+  <data name="certComboBox.ToolTip" xml:space="preserve">
+    <value>Choose Certificate you want to use to authenticate the client. There are two ways
+you can load your certificate. Load it directly from a *.pfx file by typing in the name
+of the certificate along with the suffix. You will also have to provide a password for
+the certificate. Or you can load it directly from your certificate store by typing in
+the name of certificate to use. </value>
+  </data>
 </root>
