@@ -21,36 +21,6 @@ namespace HttpsServer
             InitializeComponent();
         }
 
-         private void StartListener()
-        {
-            HttpListener web = new HttpListener();
-
-            foreach (string text in prefixHttp)
-            {
-                web.Prefixes.Add("http://*:" + text + "/");
-            }
-            foreach (string text in prefixHttps)
-            {
-                web.Prefixes.Add("https://*:" + text + "/");
-            }
-            SetText("Listening ... ");
-            web.Start();
-            SetText("Starting GetContext() ...");
-            HttpListenerContext context = web.GetContext();
-            SetText("GetContext() got something! ");
-
-
-
-            HttpListenerResponse response = context.Response;
-            const string responseString = "<html><body>Hellou! :)</body></html>";
-            var buffer = System.Text.Encoding.UTF8.GetBytes(responseString);
-            response.ContentLength64 = buffer.Length;
-            Stream output = response.OutputStream;
-            output.Write(buffer, 0, buffer.Length);
-            SetText("Output displayed!");
-            output.Close();
-            web.Stop();
-        }
 
         private void addPortTextBox_KeyUp(object sender, KeyEventArgs e)
         {
@@ -70,24 +40,28 @@ namespace HttpsServer
         }
         private void AddPort(bool portType)
         {
-            if (!string.IsNullOrWhiteSpace(addPortTextBox.Text))
+            if (portType == true)
             {
-                if (portType == true)
+                if (!string.IsNullOrWhiteSpace(addPortTextBox.Text))
                 {
-                    prefixHttp.Add(addPortTextBox.Text);
-                    SetText("Port " + addPortTextBox.Text + " will be included in the listeninig list!");
+                    myServer.PrefixHttp = addPortTextBox.Text;
+                    SetText("Port " + addPortTextBox.Text + " will be included in the Http listeninig list!");
                     addPortTextBox.Text = "";
+
                 }
-                else
+            }
+            else
+            {
+                if (!string.IsNullOrWhiteSpace(addHttpsPortTextBox.Text))
                 {
-                    prefixHttps.Add(addHttpsPortTextBox.Text);
-                    SetText("Port " + addHttpsPortTextBox + " will be included in the listeniing list!");
+                    myServer.PrefixHttps = addHttpsPortTextBox.Text;
+                    SetText("Port " + addHttpsPortTextBox.Text + " will be included in the Https listeniing list!");
                     addHttpsPortTextBox.Text = "";
                 }
             }
-
         }
-        private void SetText(string text)
+
+        public void SetText(string text)
         {
             string txt = text;
             if (ListenerTextBox.InvokeRequired)
@@ -104,14 +78,12 @@ namespace HttpsServer
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Thread ListenerThread = new Thread(new ThreadStart(StartListener));
+            Thread ListenerThread = new Thread(new ThreadStart(myServer.StartListener));
             ListenerThread.Start();
         }
 
-        private List<string> prefixHttp = new List<string>() {"8080"};
-        private List<string> prefixHttps = new List<string>() {"8443"};
+        ServerBuilder myServer = new ServerBuilder();
         delegate void SetTextCallback(string text);
-
 
     }
 }
