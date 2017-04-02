@@ -17,20 +17,30 @@ namespace HttpsClient
 {
     class ClientBuilder
     {
-
         public void StartClient()
         {
-            // ServicePointManager.ServerCertificateValidationCallback = new RemoteCertificateValidationCallback(CheckValidationResult);
+            Form1 mainForm = (Form1)Application.OpenForms[0];
+            try
+            {
+                ServicePointManager.ServerCertificateValidationCallback = new RemoteCertificateValidationCallback(CheckValidationResult);
+                mainForm.SetText("Connecting to " + ServerUrl);
+                HttpWebRequest objRequest = System.Net.HttpWebRequest.Create(ServerUrl) as HttpWebRequest;
+                objRequest.ProtocolVersion = HttpVersion.Version10;
+                var response = objRequest.GetResponse();
+                StreamReader responseReader = new StreamReader(response.GetResponseStream());
+                var responseContent = responseReader.ReadToEnd();
+                mainForm.SetText("Server replied:: " + responseContent);
+            }
+            catch (System.UriFormatException)
+            {
+                mainForm.SetText(ServerUrl + " is invalid, enter another server URL");
+            }
+            
+        }
 
-            Console.WriteLine("Visiting " + ServerUrl);
-            HttpWebRequest objRequest = System.Net.HttpWebRequest.Create(ServerUrl) as HttpWebRequest;
-            objRequest.ProtocolVersion = HttpVersion.Version10;
-
-            var response = objRequest.GetResponse();
-            StreamReader responseReader = new StreamReader(response.GetResponseStream());
-            var responseContent = responseReader.ReadToEnd();
-            Console.WriteLine("Server replied: " + responseContent);
-
+        private bool CheckValidationResult(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors errors)
+        {
+            return true;
         }
 
         private X509Certificate2 LoadClientCertificate()

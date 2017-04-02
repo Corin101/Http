@@ -62,7 +62,7 @@
             this.statusTextBox.Multiline = true;
             this.statusTextBox.Name = "statusTextBox";
             this.statusTextBox.ReadOnly = true;
-            this.statusTextBox.Size = new System.Drawing.Size(376, 127);
+            this.statusTextBox.Size = new System.Drawing.Size(376, 147);
             this.statusTextBox.TabIndex = 1;
             // 
             // ServerUrlLabel

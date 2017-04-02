@@ -9,6 +9,7 @@ using System.Net;
 using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -60,7 +61,6 @@ namespace HttpsClient
                     statusTextBox.AppendText(serverUrlTextBox.Text + " was set as the server URL." + Environment.NewLine);
                     newClient.ServerUrl = serverUrlTextBox.Text;
                     serverUrlTextBox.Text = "";
-
                 }
                 e.Handled = true;
             }
@@ -100,15 +100,33 @@ namespace HttpsClient
             }
 
         }
+        public void SetText(string text)
+        {
+            string txt = text;
+            if (statusTextBox.InvokeRequired)
+            {
+                SetTextCallback d = new SetTextCallback(SetText);
+                Invoke(d, new object[] { text });
+            }
+            else
+            {
+                statusTextBox.AppendText(text + Environment.NewLine);
+            }
+        }    
         private void StartButton_Click(object sender, EventArgs e)
         {
             if (newClient.ServerUrl != null && newClient.CertInfo != null)
             {
-                newClient.StartClient();
+                Thread ClientThread = new Thread(new ThreadStart(newClient.StartClient));
+                ClientThread.Start();
+            }
+            else
+            {
+                SetText("You must enter a valid server URL and a valid certificate!");
             }
         }
 
         ClientBuilder newClient = new ClientBuilder();
-
+        delegate void SetTextCallback(string text);
     }
 }
