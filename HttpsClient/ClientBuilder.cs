@@ -23,8 +23,23 @@ namespace HttpsClient
             try
             {
                 ServicePointManager.ServerCertificateValidationCallback = new RemoteCertificateValidationCallback(CheckValidationResult);
-                mainForm.SetText("Connecting to " + ServerUrl);
-                HttpWebRequest objRequest = System.Net.HttpWebRequest.Create(ServerUrl) as HttpWebRequest;
+                mainForm.SetText("Connecting to " + serverUrl);
+                HttpWebRequest objRequest = HttpWebRequest.Create(serverUrl) as HttpWebRequest;
+
+                if (CertPwd == string.Empty || CertPwd == null)
+                {
+                    var store = new X509Store(StoreLocation.CurrentUser);
+                    store.Open(OpenFlags.ReadOnly);
+                    X509Certificate2Collection certificates = store.Certificates.Find(X509FindType.FindBySubjectName, CertInfo, true);
+                    clientCertificate = certificates[0];
+                    store.Close();
+                }
+                else
+                {
+                    clientCertificate = new X509Certificate2(CertInfo, CertPwd);
+                    objRequest.ClientCertificates.Add(clientCertificate);
+                }
+
                 objRequest.ProtocolVersion = HttpVersion.Version10;
                 var response = objRequest.GetResponse();
                 StreamReader responseReader = new StreamReader(response.GetResponseStream());
@@ -33,7 +48,7 @@ namespace HttpsClient
             }
             catch (System.UriFormatException)
             {
-                mainForm.SetText(ServerUrl + " is invalid, enter another server URL");
+                mainForm.SetText(serverUrl + " is invalid, enter another server URL");
             }
             
         }
@@ -45,30 +60,14 @@ namespace HttpsClient
             return true;
         }
 
-        private X509Certificate2 LoadClientCertificate()
-        {
-            var store = new X509Store(StoreLocation.CurrentUser);
-            store.Open(OpenFlags.ReadOnly);
-            // CertInfo is the name of the Certificate in this case
-            X509Certificate2Collection certificates = store.Certificates.Find(X509FindType.FindBySubjectName, CertInfo, true); 
-            if (certificates.Count != 0)
-            {
-                return null;
-            }
-            store.Close();
-            return certificates[0];
-        }
 
-        private void LoadFromFile()
+        public string ServerUrl
         {
-            HttpWebRequest objRequest = System.Net.HttpWebRequest.Create(ServerUrl) as HttpWebRequest;
-            // CertInfo is the name of the certificate with it's suffix (it must me a .pfx file), CertPwd is the password for the certificate)
-            X509Certificate2 clientCertificate = new X509Certificate2(CertInfo, CertPwd);
-            objRequest.ClientCertificates.Add(clientCertificate);
+            set { serverUrl = "https://" + value + "/"; }
+            get { return serverUrl; }
         }
-    
-
-        public string ServerUrl { set; get; }
+        private string serverUrl;
+        private X509Certificate2 clientCertificate;
         public string CertInfo { set; get; } 
         public string CertPwd { set; get; } 
     }

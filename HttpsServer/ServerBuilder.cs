@@ -14,6 +14,7 @@ namespace HttpsServer
     {
         public void StartListener()
         {
+            Form1 mainForm = (Form1)Application.OpenForms[0];
             foreach (string text in prefixHttp)
             {
                 web.Prefixes.Add("http://*:" + text + "/");
@@ -31,7 +32,6 @@ namespace HttpsServer
                 HttpListenerContext context = web.GetContext();
                 mainForm.SetText("GetContext() got something! ");
 
-                HttpListenerResponse response = context.Response;
                 string responseString;
                 if (CheckCertificate(context))
                 {
@@ -44,12 +44,12 @@ namespace HttpsServer
                     mainForm.SetText("Client presented invalid certificate, closing connection to the client!");
                 }
                 
-                var buffer = System.Text.Encoding.UTF8.GetBytes(responseString);
-                response.ContentLength64 = buffer.Length;
-                Stream output = response.OutputStream;
-                output.Write(buffer, 0, buffer.Length);
+                var buffer = Encoding.UTF8.GetBytes(responseString);
+               // response.ContentLength64 = buffer.Length;
+               // Stream output = response.OutputStream;
+                context.Response.OutputStream.Write(buffer, 0, buffer.Length);
                 mainForm.SetText("Output to Client displayed!");
-                output.Close();
+                context.Response.OutputStream.Close();
             }
             catch (System.InvalidOperationException)
             {
@@ -66,7 +66,6 @@ namespace HttpsServer
             X509Certificate2 clientCertificate = context.Request.GetClientCertificate();
             if (clientCertificate == null)
             {
-                context.Response.OutputStream.Close();
                 return false;
             }
             X509Chain chain = new X509Chain();
@@ -74,7 +73,6 @@ namespace HttpsServer
             chain.Build(clientCertificate);
             if (chain.ChainStatus.Length != 0)
             {
-                context.Response.OutputStream.Close();
                 return false;
             }
             return true;
@@ -92,8 +90,7 @@ namespace HttpsServer
         }
 
         private List<string> prefixHttp = new List<string>();
-        private List<string> prefixHttps = new List<string>();
-        Form1 mainForm = (Form1)Application.OpenForms[0];
+        private List<string> prefixHttps = new List<string>();       
         HttpListener web = new HttpListener();
     }
 }
