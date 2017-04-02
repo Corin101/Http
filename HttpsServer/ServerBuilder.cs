@@ -35,12 +35,12 @@ namespace HttpsServer
                 string responseString;
                 if (CheckCertificate(context))
                 {
-                    responseString = "<html><body>Valid Certificate, Welcome! </body></html>";
+                    responseString = "Valid Certificate, Welcome!";
                     mainForm.SetText("Client presented a valid certificate, starting communication...");
                 }
                 else
                 {
-                    responseString = "<html><body>INVALID CERTIFICATE, CLOSING CONNECTION!</body></html>";
+                    responseString = "INVALID CERTIFICATE, CLOSING CONNECTION!";
                     mainForm.SetText("Client presented invalid certificate, closing connection to the client!");
                 }
                 
@@ -48,7 +48,7 @@ namespace HttpsServer
                 response.ContentLength64 = buffer.Length;
                 Stream output = response.OutputStream;
                 output.Write(buffer, 0, buffer.Length);
-                mainForm.SetText("Output displayed!");
+                mainForm.SetText("Output to Client displayed!");
                 output.Close();
             }
             catch (System.InvalidOperationException)

@@ -29,7 +29,7 @@ namespace HttpsClient
                 var response = objRequest.GetResponse();
                 StreamReader responseReader = new StreamReader(response.GetResponseStream());
                 var responseContent = responseReader.ReadToEnd();
-                mainForm.SetText("Server replied:: " + responseContent);
+                mainForm.SetText("Server response:: " + responseContent);
             }
             catch (System.UriFormatException)
             {
@@ -40,6 +40,8 @@ namespace HttpsClient
 
         private bool CheckValidationResult(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors errors)
         {
+            // Check if Server has presented valid Certificate (don't need that at the moment, but leaving
+            // it here in case i decide to use it sometime in the future).
             return true;
         }
 
@@ -48,7 +50,7 @@ namespace HttpsClient
             var store = new X509Store(StoreLocation.CurrentUser);
             store.Open(OpenFlags.ReadOnly);
             // CertInfo is the name of the Certificate in this case
-            var certificates = store.Certificates.Find(X509FindType.FindBySubjectName, CertInfo, true); 
+            X509Certificate2Collection certificates = store.Certificates.Find(X509FindType.FindBySubjectName, CertInfo, true); 
             if (certificates.Count != 0)
             {
                 return null;
