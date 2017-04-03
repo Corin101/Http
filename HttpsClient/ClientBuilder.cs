@@ -23,23 +23,12 @@ namespace HttpsClient
             try
             {
                 ServicePointManager.ServerCertificateValidationCallback = new RemoteCertificateValidationCallback(CheckValidationResult);
-                mainForm.SetText("Connecting to " + serverUrl);
                 HttpWebRequest objRequest = HttpWebRequest.Create(serverUrl) as HttpWebRequest;
 
-                if (CertPwd == string.Empty || CertPwd == null)
-                {
-                    var store = new X509Store(StoreLocation.CurrentUser);
-                    store.Open(OpenFlags.ReadOnly);
-                    X509Certificate2Collection certificates = store.Certificates.Find(X509FindType.FindBySubjectName, CertInfo, true);
-                    clientCertificate = certificates[0];
-                    store.Close();
-                }
-                else
-                {
-                    clientCertificate = new X509Certificate2(CertInfo, CertPwd);
-                    objRequest.ClientCertificates.Add(clientCertificate);
-                }
+                LoadCertificate(mainForm);
 
+                mainForm.SetText("Connecting to " + serverUrl);
+                objRequest.ClientCertificates.Add(clientCertificate);
                 objRequest.ProtocolVersion = HttpVersion.Version10;
                 var response = objRequest.GetResponse();
                 StreamReader responseReader = new StreamReader(response.GetResponseStream());
@@ -53,6 +42,14 @@ namespace HttpsClient
             catch (System.ArgumentOutOfRangeException)
             {
                 mainForm.SetText("Unable to find " + CertInfo + " certificate!");
+            }
+            catch (System.Net.WebException)
+            {
+                mainForm.SetText("Unable to connect to connect to remote server!");
+            }
+            catch (System.Security.Cryptography.CryptographicException)
+            {
+                mainForm.SetText(CertInfo + " not found! Please type the correct Certificate name.");
             }
             finally
             {
@@ -68,7 +65,21 @@ namespace HttpsClient
             return true;
         }
 
-
+        private void LoadCertificate(Form1 mainForm)
+        {
+            if (mainForm.LoadCertificateMethod == true)
+            {
+                var store = new X509Store(StoreLocation.CurrentUser);
+                store.Open(OpenFlags.ReadOnly);
+                X509Certificate2Collection certificates = store.Certificates.Find(X509FindType.FindBySubjectName, CertInfo, true);
+                clientCertificate = certificates[0];
+                store.Close();
+            }
+            else
+            {
+                clientCertificate = new X509Certificate2(CertInfo, CertPwd);
+            }
+        }
         public string ServerUrl
         {
             set { serverUrl = "https://" + value + "/"; }

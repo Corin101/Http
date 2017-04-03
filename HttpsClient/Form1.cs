@@ -35,7 +35,7 @@ namespace HttpsClient
             }
             if (certComboBox.SelectedItem == certComboBox.Items[1])
             {
-                certPathLabel.Text = "Enter path to Certificate::";
+                certPathLabel.Text = "Name of the Certificate in the store::";
                 certPathLabel.Visible = true;
                 certPathTextBox.Visible = true;
                 certPasswordLabel.Visible = false;
@@ -44,7 +44,7 @@ namespace HttpsClient
             }
             if (certComboBox.SelectedItem == certComboBox.Items[2])
             {
-                certPathLabel.Text = "Certificate name (with suffix)::";
+                certPathLabel.Text = "Enter certificate name:: ";
                 certPathLabel.Visible = true;
                 certPathTextBox.Visible = true;
                 certPasswordLabel.Visible = true;
@@ -73,13 +73,15 @@ namespace HttpsClient
                 {
                     if (certComboBox.SelectedItem == certComboBox.Items[1])
                     {
-                        statusTextBox.AppendText(certPathTextBox.Text + " was set as the path to the Certificate." + Environment.NewLine);
+                        statusTextBox.AppendText(certPathTextBox.Text + " was set as the name of the Certificate to look for." + Environment.NewLine);
                         newClient.CertInfo = certPathTextBox.Text;
+                        LoadCertificateMethod = true;
                     }
                     else
                     {
                         statusTextBox.AppendText(certPathTextBox.Text + " is the Certificate you selected." + Environment.NewLine);
                         newClient.CertInfo = certPathTextBox.Text;
+                        LoadCertificateMethod = false;
                     }
                     certPathTextBox.Text = "";
                 }
@@ -139,5 +141,7 @@ namespace HttpsClient
 
         private ClientBuilder newClient = new ClientBuilder();
         delegate void SetTextCallback(string text);
+        // if loading certificate from store LoadCertificateMethod = true, if loading from a .pfx value is false
+        public bool LoadCertificateMethod;
     }
 }
