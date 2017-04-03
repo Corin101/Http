@@ -74,10 +74,18 @@ namespace HttpsServer
                 ListenerTextBox.AppendText(text + Environment.NewLine);
             }
         }
-
-
+        public void EnableStart()
+        {
+            if (this.InvokeRequired)
+            {
+                this.Invoke((Action)(() => button1.Enabled=true));
+                return;
+            }
+            button1.Enabled = false;
+        }
         private void button1_Click(object sender, EventArgs e)
         {
+            EnableStart();
             Thread ListenerThread = new Thread(new ThreadStart(myServer.StartListener));
             ListenerThread.Start();
         }

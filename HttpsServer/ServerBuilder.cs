@@ -58,6 +58,7 @@ namespace HttpsServer
             finally
             {
                 web.Stop();
+                mainForm.EnableStart();
             }
         }
 

@@ -50,7 +50,15 @@ namespace HttpsClient
             {
                 mainForm.SetText(serverUrl + " is invalid, enter another server URL");
             }
-            
+            catch (System.ArgumentOutOfRangeException)
+            {
+                mainForm.SetText("Unable to find " + CertInfo + " certificate!");
+            }
+            finally
+            {
+                mainForm.DisableEnableStart();
+            }
+
         }
 
         private bool CheckValidationResult(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors errors)

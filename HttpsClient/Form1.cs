@@ -112,11 +112,22 @@ namespace HttpsClient
             {
                 statusTextBox.AppendText(text + Environment.NewLine);
             }
-        }    
+        }
+        public void DisableEnableStart()
+        {
+            if (this.InvokeRequired)
+            {
+                this.Invoke((Action)(() => StartButton.Enabled = true));
+                return;
+            }
+            StartButton.Enabled = false;
+        }
         private void StartButton_Click(object sender, EventArgs e)
         {
+
             if (newClient.ServerUrl != null && newClient.CertInfo != null)
             {
+                DisableEnableStart();           
                 Thread ClientThread = new Thread(new ThreadStart(newClient.StartClient));
                 ClientThread.Start();
             }
@@ -126,7 +137,7 @@ namespace HttpsClient
             }
         }
 
-        ClientBuilder newClient = new ClientBuilder();
+        private ClientBuilder newClient = new ClientBuilder();
         delegate void SetTextCallback(string text);
     }
 }
